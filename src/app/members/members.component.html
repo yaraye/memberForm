@@ -1,0 +1,124 @@
+<div id='container'>
+  <form class="needs-validation" novalidate #membersForm="ngForm"  >
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="firstName">First Name</label>
+        <!-- [ngClass]-is used when we apply the calss based on condtion   -->
+        <input class="form-control" 
+        [ngClass]="{ 'is-invalid': first_name.invalid && first_name.dirty }"
+            [(ngModel)]= "memberData.first_name" #first_name = "ngModel" name = "firstName"  id="firstName" placeholder="firstName" required> 
+             
+            <div class="invalid-feedback">
+              First Name is Required!
+            </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label for="lastName">Last Name</label>
+        <input class="form-control is"  
+        [ngClass]="{ 'is-invalid': last_name.invalid && last_name.dirty }"
+        [(ngModel)]="memberData.last_name" #last_name="ngModel" name = "lastName" id="lastName" placeholder="Enter Last Name" required>
+        <div class="invalid-feedback">
+          Last Name is Required!
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="reasonArray">Reason</label>
+      <select [(ngModel)]="memberData.reason" #reason="ngModel" name = "reason" class="form-control" id = "reason">
+        <option *ngFor="let abc of reason_array">{{abc}}</option>
+        <!-- <div *ngIf="other">
+          <input[(ngModel)]="memberData.reason" #reason="ngModel" type="text"  name = "reason" class="form-control" id="reason" required>
+        </div> -->
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="payment_month">Payment Month</label>
+      <select [(ngModel)]="memberData.payment_month" #payment_month="ngModel"  name="Payment_month" class="form-control" id = "Payment_month">
+        <option *ngFor="let abc of months_array">{{abc}}</option>
+      </select>
+    </div>
+    <!-- **********************************************************
+ [ngClass]="{ 'is-invalid': amount.invalid && amount.dirty }" --to decide when to show the message
+ <div class="invalid-feedback">
+    Please input a valid dollar amount
+  </div> **** the message that will be shown
+    ************************************************************* -->
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="amount">Payment amount</label>
+        <input 
+        [ngClass]="{ 'is-invalid': amount.invalid && amount.dirty }"
+         [(ngModel)]="memberData.amount" #amount="ngModel" type="number"  name = "amount" class="form-control" id="amount" required>
+        <div class="invalid-feedback">
+          Please input a valid dollar amount
+        </div>
+      </div>
+    </div>
+    <!-- <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="amount">Received by{{userObj.name}}</label>
+      </div>
+    </div> -->
+    <button  [disabled]="membersForm.invalid"  class="btn btn-primary" type="submit"(click)='handleSubmit()'>Submit</button>
+  </form>
+</div>
+
+<!-- 
+to disable the form if information is wrong
+novalidate #membersForm="ngForm"
+[disabled]="membersForm.invalid" -->
+<br><br>
+<div class="container">
+    <div class="row">
+      <div class="col-md-12" style="text-align:center;">
+      <h1>Current Member Information</h1>
+        <h3> {{memberData.first_name}} {{memberData.last_name}}</h3>
+        <!-- under member information add the name of the member pulled from the database with all the pervious information-->
+      </div>
+    </div>
+    <div class="row">
+
+      <!-- upon submit open a modal have {{}} members Name -->
+      <div class="col-md-12">
+      
+        <div class="table-responsive">
+            <table class="table table-bordered">
+            
+          <thead>
+              <tr>
+                  <th> First Name </th>
+                  <th> Last Name </th>
+                  <th>Reason for Payment</th>
+                  <th>Payment Month</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Received BY</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+          </thead>
+            <tbody>
+                <tr>
+                    <td>{{memberData.first_name}}</td>
+                    <td>{{memberData.last_name}}</td>
+                    <td>{{memberData.reason}}</td>
+                    <td>{{memberData.payment_month}}</td>
+                    <td>{{memberData.amount}}</td>  
+                    
+                    
+                    <td>{{memberData.todaydate}}</td>
+                    <td>{{memberData.received_by}}</td>  
+                
+                <td><span class="btn btn-primary btn-xs" (click)="edit">
+                    <span class="glyphicon glyphicon-pencil"></span>Edit</span></td>
+                <td><span class="btn btn-danger btn-xs" (click)="delete">
+                    <span class="glyphicon glyphicon-trash"></span>Delete</span></td>
+              </tr>
+            </tbody>
+          </table>
+  
+        </div>
+      </div>
+    </div>
+  </div>

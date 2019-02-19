@@ -1,0 +1,37 @@
+<div ng-controller="MyController" id='container'>
+    <div class="jumbotron">
+        <h1>Members List </h1>
+    </div>
+        <table class="table table-bordered">
+
+          <thead>
+              <tr>
+                  <th> First Name </th>
+                  <th> Last Name </th>
+                  <th>Reason for Payment</th>
+                  <th>Payment Month</th>
+                  <th>Amount</th>
+                  <th>Date</th>
+                  <th>Received BY</th>
+                </tr>
+          </thead>
+          <tbody *ngIf ='membersData'>
+            <!-- pull Data only theData is available -->
+            <!-- memberData is an array--nbeed ngFor -->
+            <tr *ngFor='let member of membersData'>
+                <td>{{member.firstName}}</td>
+                <td>{{member.lastName}}</td>
+                <td>{{member.reason_for_payment}}</td>
+                <td>{{member.payment_months}}</td>
+                <td>{{member.amount}}</td>           
+                <td>{{member.todaydate}}</td>
+                <td>{{member.received_by}}</td>      
+            </tr>
+          </tbody>
+          <tbody *ngIf ='membersData'>
+
+          </tbody>
+        </table>
+</div>
+
+
