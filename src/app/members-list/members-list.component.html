@@ -1,15 +1,19 @@
 <div ng-controller="MyController" id='container'>
     <div class="jumbotron">
-        <h1>Members List </h1>
+        <h1>Members List</h1>
     </div>
-        <table class="table table-bordered">
+        <table sortable-table (sorted)="onSorted($event)" class="table table-bordered">
 
           <thead>
               <tr>
-                  <th> First Name </th>
-                  <th> Last Name </th>
-                  <th>Reason for Payment</th>
-                  <th>Payment Month</th>
+                  <th sortable-column="firstname" (click)="sort()">
+                    <i class="fa fa-chevron-up" *ngIf="sortDirection === 'asc'" >A</i>
+                    <i class="fa fa-chevron-down" *ngIf="sortDirection === 'desc'">D</i>
+                    <ng-content></ng-content>
+                    First Name</th>
+                  <th sortable-column="lastname"> Last Name </th>
+                  <th sortable-column="firstname">Reason for Payment</th>
+                  <th>Payment Month(s)</th>
                   <th>Amount</th>
                   <th>Date</th>
                   <th>Received BY</th>
@@ -25,7 +29,12 @@
                 <td>{{member.payment_months}}</td>
                 <td>{{member.amount}}</td>           
                 <td>{{member.todaydate}}</td>
-                <td>{{member.received_by}}</td>      
+                <td>{{member.received_by}}</td>  
+                                
+                <td><span class="btn btn-primary btn-xs" (click)="edit">
+                    <span class="glyphicon glyphicon-pencil"></span>Edit</span></td>
+                <td><span class="btn btn-danger btn-xs" (click)="delete">
+                    <span class="glyphicon glyphicon-trash"></span>Delete</span></td>    
             </tr>
           </tbody>
           <tbody *ngIf ='membersData'>
@@ -34,4 +43,8 @@
         </table>
 </div>
 
-
+<!-- You use the <ng-content></ng-content> tag as a placeholder for that dynamic content,
+then when the template is parsed Angular will replace that placeholder tag with your content.  -->
+<!-- <i class="fa fa-chevron-up" *ngIf="sortDirection === 'asc'" ></i>
+<i class="fa fa-chevron-down" *ngIf="sortDirection === 'desc'"></i>
+<ng-content></ng-content> -->

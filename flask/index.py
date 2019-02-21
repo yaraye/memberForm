@@ -6,7 +6,7 @@ from passlib.hash import sha256_crypt
 import jwt
 from flask_cors import CORS
 import time
-
+import datetime
 app = Flask(__name__)
 # cors = CORS(app, resources={r"/api/=":{"orgins":"http://localhost:4200"}}) for deploying only 
 CORS(app)
@@ -80,12 +80,12 @@ def addMembers():
   cursor = conn.cursor()
 
   data_members = json.loads(request.data)
-  firstName = data_members.get('firstName', None)
-  lastName = data_members.get('lastName', None)
-  reason_for_payment = data_members.get('reason_for_payment', None)
+  firstName = data_members.get('first_name', None)
+  lastName = data_members.get('last_name', None)
+  reason_for_payment = data_members.get('reason', None)
   amount = data_members.get('amount', None)
-  payment_months = data_members.get('payment_months', None)
-  date = data_members.get('todaydate', None)
+  payment_months = data_members.get('payment_month', None)
+  todaydate = data_members.get('todaydate', datetime.datetime.today().strftime('%Y-%m-%d'))
   received_by = data_members.get('received_by', None)
 
   if not firstName:
@@ -99,14 +99,15 @@ def addMembers():
     return Response(json.dumps({'status': False, 'message': 'Amount of payment is required'}),
                     mimetype='application/json')
 
-  try:
-    cursor.execute(
-      "INSERT INTO membersForm (firstName, lastName, reason_for_payment, amount,  payment_months, received_by) VALUE (%s,%s,%s,%s,%s,%s)",
-      (firstName, lastName, reason_for_payment, amount, payment_months, received_by))
-    conn.commit()
-    return Response(json.dumps({"status": True}), mimetype='application/json')
-  except Exception, e:
-    return Response(json.dumps({"status": False, 'message': str(e)}), mimetype='application/json')
+  # try:
+  print(todaydate)
+  cursor.execute(
+    "INSERT INTO membersForm (firstName, lastName, reason_for_payment, amount, payment_months, todaydate, received_by) VALUE (%s,%s,%s,%s,%s,%s,%s)",
+    (firstName, lastName, reason_for_payment, amount, payment_months, todaydate, received_by))
+  conn.commit()
+  return Response(json.dumps({"status": True}), mimetype='application/json')
+  # except Exception, e:
+  #   return Response(json.dumps({"status": False, 'message': str(e)}), mimetype='application/json')
 
 
 @app.route('/createUser', methods=['POST'])

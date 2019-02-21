@@ -20,8 +20,7 @@ import {
 } from 'angular-6-social-login';
 import {AuthGuard} from './auth.guard';
 import { RegistrationComponent } from './registration/registration.component';
-// import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
  
 
 export function getAuthServiceConfigs() {
@@ -61,7 +60,7 @@ export function getAuthServiceConfigs() {
     RouterModule,
     SocialLoginModule,
     JwtModule,
-    MultiselectDropdownModule,
+    AngularMultiSelectModule,
     LocalStorageModule.withConfig({
       prefix:'angularProject',
       storageType:'localStorage'

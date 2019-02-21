@@ -3,7 +3,7 @@
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="firstName">First Name</label>
-        <!-- [ngClass]-is used when we apply the calss based on condtion   -->
+        <!-- [ngClass]-is used when we apply the class based on condtion   -->
         <input class="form-control" 
         [ngClass]="{ 'is-invalid': first_name.invalid && first_name.dirty }"
             [(ngModel)]= "memberData.first_name" #first_name = "ngModel" name = "firstName"  id="firstName" placeholder="firstName" required> 
@@ -31,12 +31,22 @@
         </div> -->
       </select>
     </div>
-    <div class="form-group">
-      <label for="payment_month">Payment Month</label>
-      <select [(ngModel)]="memberData.payment_month" #payment_month="ngModel"  name="Payment_month" class="form-control" id = "Payment_month">
-        <option *ngFor="let abc of months_array">{{abc}}</option>
-      </select>
+
+<div class="form-group">
+    <label for="payment_month">Payment Month(s)</label> 
+    <div id = "Payment_month">
+        <angular2-multiselect [data]="dropdownList"  [(ngModel)]="memberData.payment_month" #payment_month="ngModel"  name="Payment_month" class="form-control"  
+        [settings]="dropdownSettings" 
+        (onSelect)="onItemSelect($event)" 
+        (onDeSelect)="OnItemDeSelect($event)"
+        (onSelectAll)="onSelectAll($event)"
+        (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+
     </div>
+    
+</div>
+
+    
     <!-- **********************************************************
  [ngClass]="{ 'is-invalid': amount.invalid && amount.dirty }" --to decide when to show the message
  <div class="invalid-feedback">
@@ -60,7 +70,7 @@
         <label for="amount">Received by{{userObj.name}}</label>
       </div>
     </div> -->
-    <button  [disabled]="membersForm.invalid"  class="btn btn-primary" type="submit"(click)='handleSubmit()'>Submit</button>
+    <button  [disabled]="membersForm.invalid"  class="btn btn-primary" type="submit" (click)='handleSubmit()'>Submit</button>
   </form>
 </div>
 
@@ -90,7 +100,7 @@ novalidate #membersForm="ngForm"
                   <th> First Name </th>
                   <th> Last Name </th>
                   <th>Reason for Payment</th>
-                  <th>Payment Month</th>
+                  <th>Payment Month(s)</th>
                   <th>Amount</th>
                   <th>Date</th>
                   <th>Received BY</th>
@@ -103,17 +113,12 @@ novalidate #membersForm="ngForm"
                     <td>{{memberData.first_name}}</td>
                     <td>{{memberData.last_name}}</td>
                     <td>{{memberData.reason}}</td>
-                    <td>{{memberData.payment_month}}</td>
+                    {{abc | json}}
+                    <td>{{showPaymentMonths(memberData.payment_month)}}</td>
                     <td>{{memberData.amount}}</td>  
-                    
-                    
                     <td>{{memberData.todaydate}}</td>
                     <td>{{memberData.received_by}}</td>  
-                
-                <td><span class="btn btn-primary btn-xs" (click)="edit">
-                    <span class="glyphicon glyphicon-pencil"></span>Edit</span></td>
-                <td><span class="btn btn-danger btn-xs" (click)="delete">
-                    <span class="glyphicon glyphicon-trash"></span>Delete</span></td>
+
               </tr>
             </tbody>
           </table>
@@ -122,3 +127,4 @@ novalidate #membersForm="ngForm"
       </div>
     </div>
   </div>
+
