@@ -6,18 +6,17 @@
 
           <thead>
               <tr>
-                  <th sortable-column="firstname" (click)="sort()">
-                    <i class="fa fa-chevron-up" *ngIf="sortDirection === 'asc'" >A</i>
-                    <i class="fa fa-chevron-down" *ngIf="sortDirection === 'desc'">D</i>
-                    <ng-content></ng-content>
-                    First Name</th>
-                  <th sortable-column="lastname"> Last Name </th>
-                  <th sortable-column="firstname">Reason for Payment</th>
+                  <th> first Name </th>
+                  <th> Last Name </th>
+                  <th>Reason for Payment</th>
                   <th>Payment Month(s)</th>
                   <th>Amount</th>
+                  <th>Invoice number</th>
                   <th>Date</th>
                   <th>Received BY</th>
-                </tr>
+                  <th></th>
+                  <th></th>
+              </tr>
           </thead>
           <tbody *ngIf ='membersData'>
             <!-- pull Data only theData is available -->
@@ -27,14 +26,18 @@
                 <td>{{member.lastName}}</td>
                 <td>{{member.reason_for_payment}}</td>
                 <td>{{member.payment_months}}</td>
-                <td>{{member.amount}}</td>           
+                <td>{{member.amount}}</td>    
+                <td>{{member.invoice}}</td>       
                 <td>{{member.todaydate}}</td>
                 <td>{{member.received_by}}</td>  
                                 
-                <td><span class="btn btn-primary btn-xs" (click)="edit">
-                    <span class="glyphicon glyphicon-pencil"></span>Edit</span></td>
-                <td><span class="btn btn-danger btn-xs" (click)="delete">
+                <td><span class="btn btn-primary btn-xs" (click)="edit()">
+                    <span class="glyphicon glyphicon-pencil"></span>Edit</span>
+                    
+                  </td>
+                <td><span class="btn btn-danger btn-xs" (click)="deleteMembers(id)">
                     <span class="glyphicon glyphicon-trash"></span>Delete</span></td>    
+
             </tr>
           </tbody>
           <tbody *ngIf ='membersData'>

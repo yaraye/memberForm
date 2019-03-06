@@ -25,16 +25,15 @@ dropdownSettings = {};
   constructor(private router:Router, private memberService: MembersService, private httpClient: HttpClient, 
     private authService: AuthenticationService) { 
   //  to display the options we need the reason_array
-    this.reason_array = ['Building', 'Collection baskets', 'Donation', 'Membership', 'Tithe','other'],
-   this.months_array = ['January', 'February', 'March', 'April', 'May','June'],
-
+    this.reason_array = ['Building', 'Collection baskets', 'Donation', 'Membership', 'Tithe','other']
 
    this.memberData= {
         first_name: '',
         last_name:'',
         reason:'', 
-        payment_month:'',
+        payment_months:'',
         amount : '',
+        invoice: '',
         // todaydate = ''
         received_by :this.authService.getLoggedInUserData()['name']
     }
@@ -47,10 +46,11 @@ dropdownSettings = {};
                             {"id":5,"itemName":"May"},
                             {"id":6,"itemName":"June"},
                             {"id":7,"itemName":"July"},
-                            {"id":8,"itemName":"September"},
-                            {"id":9,"itemName":"October"},
-                            {"id":10,"itemName":"November"},
-                            {"id":11,"itemName":"December"}
+                            {"id":8,"itemName":"August"},
+                            {"id":9,"itemName":"September"},
+                            {"id":10,"itemName":"October"},
+                            {"id":11,"itemName":"November"},
+                            {"id":12,"itemName":"December"}
                           ];
     this.dropdownSettings = { 
       singleSelection: false, 
@@ -76,7 +76,7 @@ dropdownSettings = {};
     let result = [];
     if (dataOfMonths.length != 0) {
       for (let month of dataOfMonths) {
-        result.push(month.itemName);
+        result.push(month.itemName+' ');
       }
 
       // result = dataOfMonths.map(a => a.itemName);
@@ -110,7 +110,7 @@ handleSubmit() {
   let postData  = Object.assign({}, this.memberData);
   // let postData = this.memberData.map(x => Object.assign({}, x));
   // to have the payment month not as a array
-  postData.payment_month =  this.showPaymentMonths(postData.payment_month);
+  postData.payment_months =  this.showPaymentMonths(postData.payment_months);
   this.httpClient.post('http://127.0.0.1:5000/members', postData).subscribe((data) => {
     if (data['status']) {
       this.router.navigate(['/membersList']);
@@ -148,7 +148,7 @@ handleSubmit() {
 //           first_name: '',
 //           last_name:'',
 //           reason:'', 
-//           payment_month:'',
+//           payment_months:'',
 //           amount : 0
 //           // this.date = ''
 //           // received_by :''

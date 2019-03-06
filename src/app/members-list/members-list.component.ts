@@ -1,34 +1,21 @@
-import { Component, OnInit, Input, EventEmitter, OnDestroy, HostListener  } from '@angular/core';
-import {MembersService} from '../members.service'
-import { Subscription } from 'rxjs';
+import { Component, OnInit} from '@angular/core';
+import {MembersService} from '../members.service';
+import {Router} from '@angular/router';
+// import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-members-list',
   templateUrl: './members-list.component.html',
   styleUrls: ['./members-list.component.css']
 })
-export class MembersListComponent implements OnInit, OnDestroy {
+
+export class MembersListComponent implements OnInit {
   membersData: any;
   firstName: string;
+ 
 
-  constructor(private memberService: MembersService) {}
-
-  @Input('sortable-column')
-  columnName: string;
-
-  @Input('sort-direction')
-  sortDirection: string = '';
-
-
-  
-
-  @HostListener('click')
-  sort() {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-      this.memberService.columnSorted({ sortColumn: this.columnName, sortDirection: this.sortDirection });
-    }
-
-    private columnSortedSubscription: Subscription
+  constructor(private memberService: MembersService, private router:Router) {}
 
   listMembers() {
     this.memberService.fetchMembers().subscribe((data) => {
@@ -41,17 +28,23 @@ export class MembersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+  
     this.listMembers();
-    this.columnSortedSubscription = this.memberService.columnSorted$.subscribe(event => {
-      // reset this column's sort direction to hide the sort icons
-      if (this.columnName != event.sortColumn) {
-          this.sortDirection = '';
-      }
-  });
   }
-//call the api from get
-// create service auth service---member service ----import member-list. com ---
-ngOnDestroy() {
-  this.columnSortedSubscription.unsubscribe();
+
+edit(){
+  this.router.navigate(['/members']);
 }
+deleteMembers(id){
+  this.membersData.id=id
+  if (confirm("Are you sure you want to delete " + id+ "?")){
+     this.memberService. delete(id).subscribe((data) => {
+      console.log(data);
+     });
+     
+  }
+
+ }
+
 }
+

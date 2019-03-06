@@ -5,6 +5,9 @@ import {MembersComponent} from './members/members.component';
 import {MembersListComponent} from './members-list/members-list.component';
 import {AuthGuard} from './auth.guard';
 import {RegistrationComponent} from './registration/registration.component';
+import {MembershipComponent} from './membership/membership.component';
+import { DonationComponent } from './donation/donation.component';
+import { BuildingComponent } from './building/building.component';
 
 
 const routes: Routes = [
@@ -13,7 +16,10 @@ const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'registration', component: RegistrationComponent},
   {path: 'members', component: MembersComponent, canActivate: [AuthGuard]},
-  {path: 'membersList', component: MembersListComponent, canActivate: [AuthGuard]}
+  {path: 'membersList', component: MembersListComponent, canActivate: [AuthGuard]},
+  {path: 'membership', component: MembershipComponent, canActivate: [AuthGuard]},
+  {path: 'donation', component: DonationComponent, canActivate: [AuthGuard]},
+  {path: 'building', component: BuildingComponent, canActivate:[AuthGuard]}
 ];
 
 @NgModule({

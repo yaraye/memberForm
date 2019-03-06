@@ -3,10 +3,11 @@ import { Component, Input } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
 import { LocalStorageService } from 'angular-2-local-storage';
 import { Router } from '@angular/router';
-import * as jwt_decode from 'jwt-decode';
+// import * as jwt_decode from 'jwt-decode';
 
 
 @Component({
+  // is the name of the component
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
@@ -22,7 +23,8 @@ export class AppComponent {
     if(this.localS.get('LOGGED_USER_DATA')){
       this.authService.authenticateState.next(true);
     }
-// everytime the virable change let me know and this part of the code is run in observable but in promise it only runs once
+// everytime the virable change let me know and this part of the code is 
+// run in observable but in promise it only runs once
     this.authService.authenticateState.subscribe((data)=>{
       if(data===true){
         this.userObj = localS.get('LOGGED_USER_DATA')

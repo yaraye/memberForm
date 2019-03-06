@@ -21,7 +21,13 @@ import {
 import {AuthGuard} from './auth.guard';
 import { RegistrationComponent } from './registration/registration.component';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
- 
+import {ModalModule} from "ng2-modal";
+import { MembershipComponent } from './membership/membership.component';
+import { DonationComponent } from './donation/donation.component';
+import { BuildingComponent } from './building/building.component';
+
+
+
 
 export function getAuthServiceConfigs() {
   const config = new AuthServiceConfig(
@@ -44,14 +50,19 @@ export function getAuthServiceConfigs() {
 }
 
 @NgModule({
+  // goes all your components 
   declarations: [
     AppComponent,
     LoginComponent,
     MembersComponent,
     MembersListComponent,
     RegistrationComponent,
+    MembershipComponent,
+    DonationComponent,
+    BuildingComponent,
  
   ],
+  // routes and modules go here
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -61,6 +72,7 @@ export function getAuthServiceConfigs() {
     SocialLoginModule,
     JwtModule,
     AngularMultiSelectModule,
+    ModalModule,
     LocalStorageModule.withConfig({
       prefix:'angularProject',
       storageType:'localStorage'
@@ -72,6 +84,7 @@ export function getAuthServiceConfigs() {
       useFactory: getAuthServiceConfigs
     },AuthGuard
   ],
+  // list the components you want to load when the app starts. 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
