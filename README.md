@@ -1,4 +1,4 @@
-# memberForm (full stack angular + python + flask)
+# memberForm (full stack angular + python + flask + mysql(db))
 
 This project was generated with Angular CLI version 7.0.6.
 
